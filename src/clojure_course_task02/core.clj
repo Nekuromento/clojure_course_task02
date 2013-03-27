@@ -3,8 +3,10 @@
 
 
 (defn find-files [file-name path]
-  "TODO: Implement searching for a file using his name as a regexp."
-  nil)
+  (let [pattern (re-pattern file-name)
+        files (file-seq (clojure.java.io/file path))]
+    (filter #(not (nil? %))
+            (map #(re-find pattern (.getName %)) files))))
 
 (defn usage []
   (println "Usage: $ run.sh file_name path"))
